@@ -31,12 +31,12 @@ class CreateAuthRequest extends BaseRequest
                 'regex:/[a-zA-Z]/',
                 'regex:/[0-9]/',
             ],
-            'senha_confirmacao' => [
-                'required',
-                'string',
-                'max:255',
-                'same:senha',
-            ]
+            //'senha_confirmacao' => [
+            //    'required',
+            //    'string',
+            //    'max:255',
+            //    'same:senha',
+            //]
         ];
     }
 }

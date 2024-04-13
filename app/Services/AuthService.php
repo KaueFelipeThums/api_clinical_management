@@ -102,8 +102,8 @@ class AuthService
     {
         $user = $this->usersRepository->getUserByEmail($data['email']);
 
-        if (empty($user['id'])) {
-            throw new AppException('Usuário não encontrado!', 404);
+        if (empty($user['id']) || $user['situacao_conta'] === 1) {
+            throw new AppException('E-mail já verificado ou não encontrado!', 404);
         }
 
         $token_confirmation = bin2hex(random_bytes(16));
@@ -124,9 +124,9 @@ class AuthService
      * Confirmar Conta
      * 
      * @param array $data
-     * @return void
+     * @return array|null
      */
-    public function confirmAccount(array $data): void
+    public function confirmAccount(array $data): ?array
     {
         $user = $this->usersRepository->getUserByConfirmationToken($data['token_ativacao']);
 
@@ -139,5 +139,14 @@ class AuthService
             'data_hora_ativacao' => date('Y-m-d H:i:s'),
             'situacao_conta' => 1
         ]);
+
+
+        $access_token = $this->authRepository->startSession($user['id']);
+
+        unset($user['senha']);
+        unset($user['token_ativacao']);
+        $user['roles'] = json_decode($user['roles']);
+
+        return ['user' => $user, 'accessToken' => $access_token];
     }
 }

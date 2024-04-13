@@ -22,6 +22,6 @@ class BaseRequest extends FormRequest
   protected function failedValidation(Validator $validator)
   {
     $errors = (new ValidationException($validator))->errors();
-    throw new HttpResponseException(response()->json(['message' => current($errors)], 422));
+    throw new HttpResponseException(response()->json(['success' => false, 'message' => current($errors)], 422));
   }
 }
