@@ -140,7 +140,6 @@ class AuthService
             'situacao_conta' => 1
         ]);
 
-
         $access_token = $this->authRepository->startSession($user['id']);
 
         unset($user['senha']);

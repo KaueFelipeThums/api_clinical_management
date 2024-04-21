@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class PasswordRecoveryService
 {
-
     protected $usersRepository;
     protected $passwordRecoveryRepository;
 
@@ -61,7 +60,7 @@ class PasswordRecoveryService
         EmailService::sendEmail(
             $user['email'],
             'Código de Recuperação de Senha',
-            'Seu código de recuperação de senha é: $token'
+            "Seu código de recuperação de senha é: $token"
         );
     }
 

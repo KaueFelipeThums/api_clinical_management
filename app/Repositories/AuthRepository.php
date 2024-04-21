@@ -8,7 +8,7 @@ use App\Models\Users;
 class AuthRepository extends BaseRepository
 {
 	/**
-	 * Construtor
+	 * Construtor $users
 	 * 
 	 * @param App\Models\Users
 	 */

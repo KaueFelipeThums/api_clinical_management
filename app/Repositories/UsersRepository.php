@@ -10,7 +10,7 @@ class UsersRepository extends BaseRepository
 	/**
 	 * Construtor
 	 * 
-	 * @param App\Models\Users
+	 * @param App\Models\Users $users
 	 */
 	public function __construct(Users $users)
 	{

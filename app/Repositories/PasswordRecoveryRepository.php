@@ -10,7 +10,7 @@ class PasswordRecoveryRepository extends BaseRepository
     /**
      * Construtor
      * 
-     * @param App\Models\PasswordRecovery
+     * @param App\Models\PasswordRecovery $passwordRecovery
      */
     public function __construct(PasswordRecovery $passwordRecovery)
     {
