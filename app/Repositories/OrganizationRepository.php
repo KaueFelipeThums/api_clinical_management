@@ -39,7 +39,39 @@ class OrganizationRepository extends BaseRepository
    */
   public function getAllByLoggedUser(int $auth_user_id): ?array
   {
-    $response = $this->model::where('id_usuarios_us', $auth_user_id)->where('status', 1)->get();
+    $response = $this->model::leftJoin('usuarios_us AS us', 'organizacoes_org.id_usuarios_us', 'us.id')
+      ->where('organizacoes_org.id_usuarios_us', $auth_user_id)
+      ->where('organizacoes_org.status', 1)
+      ->get([
+        'organizacoes_org.id',
+        'organizacoes_org.descricao',
+        'organizacoes_org.id_usuarios_us',
+        'organizacoes_org.status',
+        'organizacoes_org.created_at',
+        'us.nome AS nome_usuario'
+      ]);
+    return !empty($response) ? $response->toArray() : null;
+  }
+
+  /**
+   * Buscar organização
+   *
+   * @param integer $id
+   * @return array|null
+   */
+  public function getWithDetails(int $id): ?array
+  {
+    $response = $this->model::leftJoin('usuarios_us AS us', 'organizacoes_org.id_usuarios_us', 'us.id')
+      ->where('organizacoes_org.id', $id)
+      ->where('organizacoes_org.status', 1)
+      ->first([
+        'organizacoes_org.id',
+        'organizacoes_org.descricao',
+        'organizacoes_org.id_usuarios_us',
+        'organizacoes_org.status',
+        'organizacoes_org.created_at',
+        'us.nome AS nome_usuario'
+      ]);
     return !empty($response) ? $response->toArray() : null;
   }
 }

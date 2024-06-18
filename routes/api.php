@@ -23,5 +23,5 @@ Route::controller(OrganizationController::class)->prefix('v1/organization')->mid
     Route::get('/get/{id}', 'get');
     Route::post('/update', 'update');
     Route::get('/getAll', 'getAllByLoggedUser');
-    Route::delete('/delete', 'delete');
+    Route::post('/delete', 'delete');
 });

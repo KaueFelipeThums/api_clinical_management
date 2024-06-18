@@ -30,12 +30,14 @@ class OrganizationService
   public function create(array $data): ?array
   {
     $auth_user_id = Auth::id();
-    $response = $this->organizationRepository->create([
+    $createdOrganization = $this->organizationRepository->create([
       'id_usuarios_us' => $auth_user_id,
       'descricao' => $data['descricao'],
       'id_usuarios_us_lancamento' => $auth_user_id,
       'status' => 1
     ]);
+
+    $response = $this->organizationRepository->getWithDetails($createdOrganization['id']);
 
     return $response;
   }
@@ -63,13 +65,13 @@ class OrganizationService
   {
     $auth_user_id = Auth::id();
     $organization = $this->organizationRepository->getByLoggedUser($data['id'], $auth_user_id);
-
     if (empty($organization['id'])) {
       throw new AppException('Registro não encontrado ou usuário sem permissão!', 422);
     }
     $data['id_usuarios_us_lancamento'] = $auth_user_id;
+    $updatedOrganization = $this->organizationRepository->update($data);
+    $response = $this->organizationRepository->getWithDetails($updatedOrganization['id']);
 
-    $response = $this->organizationRepository->update($data);
     return $response;
   }
 
